@@ -1,6 +1,5 @@
-package com.arctouch.codechallenge.data.source.remote
+package com.arctouch.codechallenge.data.source.remote.common
 
-import com.arctouch.codechallenge.data.source.remote.api.TmdbApi
 import okhttp3.OkHttpClient
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
@@ -22,17 +21,6 @@ class ServiceClient {
     fun getApiClient(): TmdbApi = retrofit.create(TmdbApi::class.java)
 
 }
-
-/*
-api.genres(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                Cache.cacheGenres(it.genres)
-                startActivity(Intent(this, HomeActivity::class.java))
-                finish()
-            }
- */
 
 val networkModule = Kodein.Module {
     bind<TmdbApi>() with singleton { ServiceClient().getApiClient() }

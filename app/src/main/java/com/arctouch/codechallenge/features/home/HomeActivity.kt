@@ -1,30 +1,49 @@
 package com.arctouch.codechallenge.features.home
 
-import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.LinearLayout
 import com.arctouch.codechallenge.R
-import com.arctouch.codechallenge.data.source.remote.api.TmdbApi
 import com.arctouch.codechallenge.base.BaseActivity
-import com.arctouch.codechallenge.data.Cache
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.arctouch.codechallenge.data.model.Movie
 import kotlinx.android.synthetic.main.home_activity.*
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.closestKodein
+import org.kodein.di.generic.instance
 
-class HomeActivity : BaseActivity() {
+class HomeActivity : BaseActivity<HomeView>(), HomeView {
+    override val kodein by closestKodein()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.home_activity)
+    override val layout: Int = R.layout.home_activity
 
-        api.upcomingMovies(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, 1, TmdbApi.DEFAULT_REGION)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                val moviesWithGenres = it.results.map { movie ->
-                    movie.copy(genres = Cache.genres.filter { movie.genreIds?.contains(it.id) == true })
-                }
-                recyclerView.adapter = HomeAdapter(moviesWithGenres)
-                progressBar.visibility = View.GONE
-            }
+    override val presenter: HomePresenter by instance()
+
+    private lateinit var homeAdapter: HomeAdapter
+
+    override fun setPresenter() {
+        presenter.attachView(this)
     }
+
+    override fun initView() {
+        homeAdapter = HomeAdapter(emptyList())
+
+        recyclerView.adapter = homeAdapter
+    }
+
+    override fun start() {
+        presenter.init()
+    }
+
+    override fun showMovies(movies: List<Movie>) {
+        homeAdapter.movies = movies
+        progressBar.visibility = View.GONE
+    }
+
+    override fun showError(messageId: Int) {
+    }
+
+    override fun showError(messsage: String) {
+    }
+
 }
