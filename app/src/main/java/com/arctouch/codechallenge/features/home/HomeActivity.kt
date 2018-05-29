@@ -1,6 +1,8 @@
 package com.arctouch.codechallenge.features.home
 
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
 import com.arctouch.codechallenge.R

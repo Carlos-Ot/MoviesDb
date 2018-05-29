@@ -11,7 +11,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.movie_item.view.*
 
-class HomeAdapter(items: List<Movie>) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+private const val LOADING = 1
+private const val MOVIE = 2
+
+class HomeAdapter(items: List<Movie>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var isLoading: Boolean = false
 
     var movies: List<Movie> = items
     set(items) {
@@ -19,7 +24,7 @@ class HomeAdapter(items: List<Movie>) : RecyclerView.Adapter<HomeAdapter.ViewHol
         notifyDataSetChanged()
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val movieImageUrlBuilder = MovieImageUrlBuilder()
 
@@ -35,12 +40,41 @@ class HomeAdapter(items: List<Movie>) : RecyclerView.Adapter<HomeAdapter.ViewHol
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
-        return ViewHolder(view)
+    class LoadingViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        fun bind() {
+            //Call progress indicator
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val view: View
+        val viewItem: RecyclerView.ViewHolder
+
+        if (viewType == LOADING) {
+            view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
+            viewItem = LoadingViewHolder(view)
+        } else {
+            view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
+            viewItem = MovieViewHolder(view)
+        }
+
+        return viewItem
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+        when (holder?.itemViewType) {
+            LOADING -> (holder as? LoadingViewHolder)?.bind()
+
+            MOVIE -> (holder as? MovieViewHolder)?.bind(movies[position])
+
+            else -> (holder as? LoadingViewHolder)?.bind()
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (position == (movies.size - 1) && isLoading) LOADING else MOVIE
     }
 
     override fun getItemCount() = movies.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(movies[position])
 }
