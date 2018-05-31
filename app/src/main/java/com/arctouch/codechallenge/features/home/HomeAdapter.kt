@@ -10,18 +10,23 @@ import com.arctouch.codechallenge.util.MovieImageUrlBuilder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.movie_item.view.*
+import kotlinx.android.synthetic.main.progress_item.view.*
 
 private const val LOADING = 1
 private const val MOVIE = 2
 
-class HomeAdapter(items: List<Movie>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeAdapter(items: MutableList<Movie>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var isLoading: Boolean = false
 
-    var movies: List<Movie> = items
-    set(items) {
-        field = items
-        notifyDataSetChanged()
+    var movies: MutableList<Movie> = items
+        set(items) {
+            field.addAll(items)
+            notifyDataSetChanged()
+        }
+
+    init {
+        movies.addAll(items)
     }
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,7 +47,7 @@ class HomeAdapter(items: List<Movie>) : RecyclerView.Adapter<RecyclerView.ViewHo
 
     class LoadingViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind() {
-            //Call progress indicator
+            itemView.progressItem.isIndeterminate = true
         }
     }
 
@@ -51,7 +56,7 @@ class HomeAdapter(items: List<Movie>) : RecyclerView.Adapter<RecyclerView.ViewHo
         val viewItem: RecyclerView.ViewHolder
 
         if (viewType == LOADING) {
-            view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
+            view = LayoutInflater.from(parent.context).inflate(R.layout.progress_item, parent, false)
             viewItem = LoadingViewHolder(view)
         } else {
             view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
@@ -76,5 +81,19 @@ class HomeAdapter(items: List<Movie>) : RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     override fun getItemCount() = movies.size
+
+    fun addProgressItem() {
+        isLoading = true
+        movies.add(Movie())
+    }
+
+    fun removeProgressItem() {
+        isLoading = false
+
+        movies.apply {
+            removeAt(lastIndex)
+            notifyItemRemoved(lastIndex)
+        }
+    }
 
 }

@@ -6,5 +6,6 @@ import com.arctouch.codechallenge.data.model.Movie
 
 interface HomeView: BaseView {
 
-    fun showMovies(movies: List<Movie>)
+    fun showMovies(movies: MutableList<Movie>)
+    fun showNextPage(movies: MutableList<Movie>)
 }

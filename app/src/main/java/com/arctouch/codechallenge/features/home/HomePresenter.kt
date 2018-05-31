@@ -2,6 +2,7 @@ package com.arctouch.codechallenge.features.home
 
 import com.arctouch.codechallenge.base.BasePresenter
 import com.arctouch.codechallenge.data.Cache
+import com.arctouch.codechallenge.data.model.Movie
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -17,7 +18,10 @@ class HomePresenter(private val interactor: HomeInteractor): BasePresenter<HomeV
                         movie.copy(genres = Cache.genres.filter { movie.genreIds?.contains(it.id) == true })
                     }
 
-                    view?.showMovies(moviesWithGenres)
+                    val movies: MutableList<Movie> = mutableListOf()
+                    movies.addAll(moviesWithGenres)
+
+                    view?.showMovies(movies)
                 }
     }
 
@@ -32,5 +36,21 @@ class HomePresenter(private val interactor: HomeInteractor): BasePresenter<HomeV
 
     override fun destroy() {
         //TODO Call dispose here
+    }
+
+    fun loadMovies(page: Int) {
+        interactor.getUpcommingMovies()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    val moviesWithGenres = it.results.map { movie ->
+                        movie.copy(genres = Cache.genres.filter { movie.genreIds?.contains(it.id) == true })
+                    }
+
+                    val movies: MutableList<Movie> = mutableListOf()
+                    movies.addAll(moviesWithGenres)
+
+                    view?.showNextPage(movies)
+                }
     }
 }
