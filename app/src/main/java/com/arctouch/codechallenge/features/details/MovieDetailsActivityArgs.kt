@@ -6,10 +6,10 @@ import com.arctouch.codechallenge.base.BaseActivityArgs
 
 private const val MOVIE_ID_KEY = "movie_id_key"
 
-private const val DEFAULT_ID = -1
+private const val DEFAULT_ID = -1L
 
 class MovieDetailsActivityArgs(
-        val movieId: Int
+        val movieId: Long
 ): BaseActivityArgs {
 
     override fun intent(activity: Context): Intent = Intent(
@@ -21,7 +21,7 @@ class MovieDetailsActivityArgs(
 
     companion object {
         fun getArguments(intent: Intent): MovieDetailsActivityArgs {
-            return MovieDetailsActivityArgs(movieId = intent.getIntExtra(MOVIE_ID_KEY, DEFAULT_ID))
+            return MovieDetailsActivityArgs(movieId = intent.getLongExtra(MOVIE_ID_KEY, DEFAULT_ID))
         }
     }
 

@@ -14,7 +14,7 @@ data class UpcomingMoviesResponse(
 )
 
 data class Movie(
-    val id: Int = -1,
+    val id: Long = -1L,
     val title: String = "",
     val overview: String? = "",
     val genres: List<Genre>? = emptyList(),

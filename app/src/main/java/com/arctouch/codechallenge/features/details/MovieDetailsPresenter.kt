@@ -23,12 +23,12 @@ class MovieDetailsPresenter(private val interactor: MovieDetailsInteractor): Bas
     override fun destroy() {
     }
 
-    fun loadMovieDetails(movieId: Int) {
+    fun loadMovieDetails(movieId: Long) {
         interactor.getMovieDetails(movieId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    Log.d("carlosottoboni", "MovieTitle: ${it.title}")
+                    view?.showMovieDetail(it)
                 }
     }
 

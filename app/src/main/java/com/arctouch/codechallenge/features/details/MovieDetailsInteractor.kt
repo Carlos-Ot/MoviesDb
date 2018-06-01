@@ -7,7 +7,7 @@ import io.reactivex.Observable
 
 class MovieDetailsInteractor(private val movieRepository: MovieRepository) {
 
-    fun getMovieDetails(movieId: Int): Observable<Movie> {
+    fun getMovieDetails(movieId: Long): Observable<Movie> {
         return movieRepository.getAndSaveMovie(movieId)
     }
 }

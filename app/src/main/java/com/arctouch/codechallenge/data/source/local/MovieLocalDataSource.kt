@@ -11,7 +11,7 @@ class MovieLocalDataSource: MovieDataSource {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getAndSaveMovie(movieId: Int): Observable<Movie> {
+    override fun getAndSaveMovie(movieId: Long): Observable<Movie> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

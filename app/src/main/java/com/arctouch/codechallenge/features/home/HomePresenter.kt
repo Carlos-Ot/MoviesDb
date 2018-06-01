@@ -41,7 +41,7 @@ class HomePresenter(private val interactor: HomeInteractor): BasePresenter<HomeV
                 }
     }
 
-    fun handleItemCLicked(movieId: Int) {
+    fun handleItemCLicked(movieId: Long) {
         view?.callMovieDetailsActivity(movieId)
     }
 }

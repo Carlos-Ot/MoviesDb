@@ -102,7 +102,7 @@ class HomeActivity : BaseActivity<HomeView>(), HomeView {
         }
     }
 
-    override fun callMovieDetailsActivity(movieId: Int) {
+    override fun callMovieDetailsActivity(movieId: Long) {
         MovieDetailsActivityArgs(movieId).launch(this)
     }
 
