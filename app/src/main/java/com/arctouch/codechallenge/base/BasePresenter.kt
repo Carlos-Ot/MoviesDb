@@ -1,7 +1,11 @@
 package com.arctouch.codechallenge.base
 
+import io.reactivex.disposables.CompositeDisposable
+
 
 abstract class BasePresenter<V: BaseView> {
+
+    protected val compositeDisposable = CompositeDisposable()
 
      var view: V? = null
 

@@ -2,6 +2,7 @@ package com.arctouch.codechallenge.base
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import io.reactivex.disposables.CompositeDisposable
 import org.kodein.di.KodeinAware
 
 abstract class BaseActivity<V: BaseView> : AppCompatActivity(), KodeinAware, BaseView {

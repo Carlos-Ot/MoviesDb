@@ -24,11 +24,12 @@ class HomePresenter(private val interactor: HomeInteractor): BasePresenter<HomeV
     }
 
     override fun destroy() {
-        //TODO Call dispose here
+        compositeDisposable.clear()
     }
 
     fun loadMovies(page: Long = DEFAULT_PAGE, isFirst: Boolean = false) {
-        interactor.getUpcommingMovies(page)
+
+        val disposable = interactor.getUpcommingMovies(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
@@ -39,6 +40,7 @@ class HomePresenter(private val interactor: HomeInteractor): BasePresenter<HomeV
                         view?.showNextPage(it.first)
                     }
                 }
+        compositeDisposable.add(disposable)
     }
 
     fun handleItemCLicked(movieId: Long) {

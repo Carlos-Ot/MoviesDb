@@ -21,15 +21,17 @@ class MovieDetailsPresenter(private val interactor: MovieDetailsInteractor): Bas
     }
 
     override fun destroy() {
+        compositeDisposable.clear()
     }
 
     fun loadMovieDetails(movieId: Long) {
-        interactor.getMovieDetails(movieId)
+        val disposable = interactor.getMovieDetails(movieId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     view?.showMovieDetail(it)
                 }
+        compositeDisposable.add(disposable)
     }
 
 }
