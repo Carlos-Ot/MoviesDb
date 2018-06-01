@@ -21,7 +21,3 @@ class ServiceClient {
     fun getApiClient(): TmdbApi = retrofit.create(TmdbApi::class.java)
 
 }
-
-val networkModule = Kodein.Module {
-    bind<TmdbApi>() with singleton { ServiceClient().getApiClient() }
-}

@@ -32,18 +32,16 @@ class HomePresenter(private val interactor: HomeInteractor): BasePresenter<HomeV
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    val moviesWithGenres = it.results.map { movie ->
-                        movie.copy(genres = Cache.genres.filter { movie.genreIds?.contains(it.id) == true })
-                    }
-
-                    val movies: MutableList<Movie> = mutableListOf()
-                    movies.addAll(moviesWithGenres)
 
                     if (isFirst) {
-                        view?.showMovies(movies, it.totalPages)
+                        view?.showMovies(it.first, it.second)
                     } else {
-                        view?.showNextPage(movies)
+                        view?.showNextPage(it.first)
                     }
                 }
+    }
+
+    fun handleItemCLicked(movieId: Int) {
+        view?.callMovieDetailsActivity(movieId)
     }
 }

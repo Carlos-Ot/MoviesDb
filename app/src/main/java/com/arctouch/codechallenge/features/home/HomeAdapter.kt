@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.data.model.Movie
 import com.arctouch.codechallenge.util.MovieImageUrlBuilder
+import com.arctouch.codechallenge.util.onClick
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.movie_item.view.*
@@ -15,7 +16,9 @@ import kotlinx.android.synthetic.main.progress_item.view.*
 private const val LOADING = 1
 private const val MOVIE = 2
 
-class HomeAdapter(items: MutableList<Movie>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+private const val GENRE_SEPARATOR = ", "
+
+class HomeAdapter(items: MutableList<Movie>, private val itemClickListener: (View, Int, Int) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var isLoading: Boolean = false
 
@@ -35,7 +38,7 @@ class HomeAdapter(items: MutableList<Movie>) : RecyclerView.Adapter<RecyclerView
 
         fun bind(movie: Movie) {
             itemView.titleTextView.text = movie.title
-            itemView.genresTextView.text = movie.genres?.joinToString(separator = ", ") { it.name }
+            itemView.genresTextView.text = movie.genres?.joinToString(separator = GENRE_SEPARATOR) { it.name }
             itemView.releaseDateTextView.text = movie.releaseDate
 
             Glide.with(itemView)
@@ -52,18 +55,21 @@ class HomeAdapter(items: MutableList<Movie>) : RecyclerView.Adapter<RecyclerView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view: View
+        val inflatedView: View
         val viewItem: RecyclerView.ViewHolder
 
         if (viewType == LOADING) {
-            view = LayoutInflater.from(parent.context).inflate(R.layout.progress_item, parent, false)
-            viewItem = LoadingViewHolder(view)
+            inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.progress_item, parent, false)
+            viewItem = LoadingViewHolder(inflatedView)
         } else {
-            view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
-            viewItem = MovieViewHolder(view)
+            inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
+            viewItem = MovieViewHolder(inflatedView)
         }
 
-        return viewItem
+        return viewItem.onClick {
+            view, position, type ->
+            itemClickListener(view, position, type)
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {

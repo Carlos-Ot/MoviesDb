@@ -4,6 +4,8 @@ import com.arctouch.codechallenge.data.repositories.MovieRepository
 import com.arctouch.codechallenge.data.source.dataSource.MovieDataSource
 import com.arctouch.codechallenge.data.source.local.MovieLocalDataSource
 import com.arctouch.codechallenge.data.source.remote.MovieRemoteDataSource
+import com.arctouch.codechallenge.data.source.remote.common.ServiceClient
+import com.arctouch.codechallenge.data.source.remote.common.TmdbApi
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -18,4 +20,8 @@ val dataSourceModule = Kodein.Module {
     bind<MovieDataSource>(tag = "remote") with provider { MovieRemoteDataSource(instance()) }
 
     bind<MovieDataSource>(tag = "local") with singleton { MovieLocalDataSource() }
+}
+
+val networkModule = Kodein.Module {
+    bind<TmdbApi>() with singleton { ServiceClient().getApiClient() }
 }

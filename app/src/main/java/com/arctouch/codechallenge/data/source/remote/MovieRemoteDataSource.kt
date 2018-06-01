@@ -26,7 +26,7 @@ class MovieRemoteDataSource(private val apiClient: TmdbApi): MovieDataSource {
                })
     }
 
-    override fun getAndSaveMovie(): Observable<Movie> {
+    override fun getAndSaveMovie(page: Int): Observable<Movie> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

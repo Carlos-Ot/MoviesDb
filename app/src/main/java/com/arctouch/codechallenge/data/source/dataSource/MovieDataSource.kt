@@ -11,5 +11,5 @@ interface MovieDataSource {
 
     fun getUpcommingMovies(page: Long): Observable<UpcomingMoviesResponse>
 
-    fun getAndSaveMovie(): Observable<Movie>
+    fun getAndSaveMovie(movieId: Int): Observable<Movie>
 }

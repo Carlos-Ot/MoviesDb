@@ -13,16 +13,25 @@ abstract class BaseActivity<V: BaseView> : AppCompatActivity(), KodeinAware, Bas
         super.onCreate(savedInstanceState)
         setContentView(layout)
 
-        initView()
         setPresenter()
+        initView()
         onCreate()
 
     }
 
+    /**
+     * Initialize views for Activity
+     */
     protected abstract fun initView()
 
+    /**
+     * Attach Activity to Presenter
+     */
     protected abstract fun setPresenter()
 
+    /**
+     * Call any code that have to run at Activity.onCreate()
+     */
     protected abstract fun onCreate()
 
     override fun onPause() {
@@ -46,15 +55,3 @@ abstract class BaseActivity<V: BaseView> : AppCompatActivity(), KodeinAware, Bas
     }
 
 }
-
-
-
-
-//
-//    protected val api: TmdbApi = Retrofit.Builder()
-//        .baseUrl(TmdbApi.URL)
-//        .client(OkHttpClient.Builder().build())
-//        .addConverterFactory(MoshiConverterFactory.create())
-//        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//        .build()
-//        .create(TmdbApi::class.java)

@@ -14,7 +14,7 @@ class MovieRepository(
         return movieRemoteDataSource.getUpcommingMovies(page)
     }
 
-    override fun getAndSaveMovie(): Observable<Movie> {
-        return movieRemoteDataSource.getAndSaveMovie()
+    override fun getAndSaveMovie(movieId: Int): Observable<Movie> {
+        return movieRemoteDataSource.getAndSaveMovie(movieId)
     }
 }

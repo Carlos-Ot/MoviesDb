@@ -2,9 +2,11 @@ package com.arctouch.codechallenge.features.home
 
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.Toast
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.base.BaseActivity
 import com.arctouch.codechallenge.data.model.Movie
+import com.arctouch.codechallenge.features.details.MovieDetailsActivityArgs
 import kotlinx.android.synthetic.main.home_activity.*
 import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
@@ -19,7 +21,7 @@ class HomeActivity : BaseActivity<HomeView>(), HomeView {
 
     override val presenter: HomePresenter by instance()
 
-    private val homeAdapter: HomeAdapter = HomeAdapter(mutableListOf())
+    private lateinit var homeAdapter: HomeAdapter
 
     private val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(this)
 
@@ -51,12 +53,17 @@ class HomeActivity : BaseActivity<HomeView>(), HomeView {
         }
 
     }
+    private val itemClickListener: (View, Int, Int) -> Unit = {view, position, type ->
+        presenter.handleItemCLicked(homeAdapter.movies[position].id)
+    }
 
     override fun setPresenter() {
         presenter.attachView(this)
     }
 
     override fun initView() {
+
+        homeAdapter = HomeAdapter(mutableListOf(), itemClickListener)
 
         recyclerView.apply {
             adapter = homeAdapter
@@ -66,8 +73,8 @@ class HomeActivity : BaseActivity<HomeView>(), HomeView {
 
     }
 
-    //Call any code that have to run at activity onCreate
     override fun onCreate() {
+
     }
 
     override fun showMovies(movies: MutableList<Movie>, pages: Int) {
@@ -93,6 +100,10 @@ class HomeActivity : BaseActivity<HomeView>(), HomeView {
         } else {
             isLastPage = true
         }
+    }
+
+    override fun callMovieDetailsActivity(movieId: Int) {
+        MovieDetailsActivityArgs(movieId).launch(this)
     }
 
     override fun showError(messageId: Int) {

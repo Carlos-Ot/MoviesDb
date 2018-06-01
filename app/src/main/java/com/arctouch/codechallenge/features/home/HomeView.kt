@@ -8,4 +8,5 @@ interface HomeView: BaseView {
 
     fun showMovies(movies: MutableList<Movie>, pages: Int)
     fun showNextPage(movies: MutableList<Movie>)
+    fun callMovieDetailsActivity(movieId: Int)
 }
