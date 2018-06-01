@@ -10,8 +10,8 @@ class MovieRepository(
          private val movieRemoteDataSource: MovieDataSource,
          private val movieLocalDataSource: MovieDataSource): MovieDataSource {
 
-    override fun getUpcommingMovies(): Observable<UpcomingMoviesResponse> {
-        return movieRemoteDataSource.getUpcommingMovies()
+    override fun getUpcommingMovies(page: Long): Observable<UpcomingMoviesResponse> {
+        return movieRemoteDataSource.getUpcommingMovies(page)
     }
 
     override fun getAndSaveMovie(): Observable<Movie> {

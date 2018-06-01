@@ -85,6 +85,7 @@ class HomeAdapter(items: MutableList<Movie>) : RecyclerView.Adapter<RecyclerView
     fun addProgressItem() {
         isLoading = true
         movies.add(Movie())
+        notifyDataSetChanged()
     }
 
     fun removeProgressItem() {

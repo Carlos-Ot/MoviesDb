@@ -7,7 +7,7 @@ import io.reactivex.Observable
 
 
 class MovieLocalDataSource: MovieDataSource {
-    override fun getUpcommingMovies(): Observable<UpcomingMoviesResponse> {
+    override fun getUpcommingMovies(page: Long): Observable<UpcomingMoviesResponse> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

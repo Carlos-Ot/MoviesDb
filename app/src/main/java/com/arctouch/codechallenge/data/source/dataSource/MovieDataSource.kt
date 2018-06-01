@@ -9,7 +9,7 @@ import io.reactivex.Single
 
 interface MovieDataSource {
 
-    fun getUpcommingMovies(): Observable<UpcomingMoviesResponse>
+    fun getUpcommingMovies(page: Long): Observable<UpcomingMoviesResponse>
 
     fun getAndSaveMovie(): Observable<Movie>
 }

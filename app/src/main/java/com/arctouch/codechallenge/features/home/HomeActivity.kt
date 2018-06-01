@@ -9,6 +9,9 @@ import kotlinx.android.synthetic.main.home_activity.*
 import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
 
+private const val FIRST_PAGE: Long = 1
+private const val DEFAULT_INT = 0
+
 class HomeActivity : BaseActivity<HomeView>(), HomeView {
     override val kodein by closestKodein()
 
@@ -24,14 +27,19 @@ class HomeActivity : BaseActivity<HomeView>(), HomeView {
 
     private var isLastPage: Boolean = false
 
-    var paginationListener: PaginationListener = object : PaginationListener(linearLayoutManager) {
+    private var currentPage: Long = FIRST_PAGE
+
+    private var totalPages: Int = DEFAULT_INT
+
+    private val paginationListener: PaginationListener = object : PaginationListener(linearLayoutManager) {
         override fun loadPage() {
             isLoading = true
-            presenter.loadMovies(2)
+            currentPage++
+            presenter.loadMovies(currentPage)
         }
 
         override fun totalPageCount(): Int {
-            return 10
+            return totalPages
         }
 
         override fun isLastPage(): Boolean {
@@ -55,24 +63,35 @@ class HomeActivity : BaseActivity<HomeView>(), HomeView {
             layoutManager = linearLayoutManager
             addOnScrollListener(paginationListener)
         }
+
     }
 
-    override fun start() {
-        presenter.init()
+    //Call any code that have to run at activity onCreate
+    override fun onCreate() {
     }
 
-    override fun showMovies(movies: MutableList<Movie>) {
+    override fun showMovies(movies: MutableList<Movie>, pages: Int) {
+        totalPages = pages
         homeAdapter.movies = movies
         progressBar.visibility = View.GONE
 
-        homeAdapter.addProgressItem()
+        if(currentPage < totalPages) {
+            homeAdapter.addProgressItem()
+        } else {
+            isLastPage = true
+        }
     }
 
     override fun showNextPage(movies: MutableList<Movie>) {
-        with(homeAdapter) {
-            removeProgressItem()
-            this.movies = movies
-            addProgressItem()
+        homeAdapter.removeProgressItem()
+        isLoading = false
+
+        homeAdapter.movies = movies
+
+        if (currentPage < totalPages) {
+            homeAdapter.addProgressItem()
+        } else {
+            isLastPage = true
         }
     }
 

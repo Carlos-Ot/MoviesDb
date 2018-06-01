@@ -12,14 +12,14 @@ import io.reactivex.functions.BiFunction
 
 class MovieRemoteDataSource(private val apiClient: TmdbApi): MovieDataSource {
 
-    override fun getUpcommingMovies(): Observable<UpcomingMoviesResponse> {
+    override fun getUpcommingMovies(page: Long): Observable<UpcomingMoviesResponse> {
        return Observable.zip(
                apiClient.genres(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE)
                        .flatMap {
                            Cache.cacheGenres(it.genres)
                            Observable.just(it)
                        },
-               apiClient.upcomingMovies(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, 1, TmdbApi.DEFAULT_REGION),
+               apiClient.upcomingMovies(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, page, TmdbApi.DEFAULT_REGION),
                   BiFunction<GenreResponse, UpcomingMoviesResponse, UpcomingMoviesResponse> {
                       _: GenreResponse, movies: UpcomingMoviesResponse ->
                       movies

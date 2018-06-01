@@ -2,9 +2,7 @@ package com.arctouch.codechallenge.base
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
-import org.kodein.di.android.closestKodein
 
 abstract class BaseActivity<V: BaseView> : AppCompatActivity(), KodeinAware, BaseView {
 
@@ -17,7 +15,7 @@ abstract class BaseActivity<V: BaseView> : AppCompatActivity(), KodeinAware, Bas
 
         initView()
         setPresenter()
-        start()
+        onCreate()
 
     }
 
@@ -25,7 +23,7 @@ abstract class BaseActivity<V: BaseView> : AppCompatActivity(), KodeinAware, Bas
 
     protected abstract fun setPresenter()
 
-    protected abstract fun start()
+    protected abstract fun onCreate()
 
     override fun onPause() {
         super.onPause()

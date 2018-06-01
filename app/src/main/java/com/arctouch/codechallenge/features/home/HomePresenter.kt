@@ -6,23 +6,12 @@ import com.arctouch.codechallenge.data.model.Movie
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
+private const val DEFAULT_PAGE = 1L
 
 class HomePresenter(private val interactor: HomeInteractor): BasePresenter<HomeView>() {
 
     override fun init() {
-        interactor.getUpcommingMovies()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    val moviesWithGenres = it.results.map { movie ->
-                        movie.copy(genres = Cache.genres.filter { movie.genreIds?.contains(it.id) == true })
-                    }
-
-                    val movies: MutableList<Movie> = mutableListOf()
-                    movies.addAll(moviesWithGenres)
-
-                    view?.showMovies(movies)
-                }
+        loadMovies(isFirst = true)
     }
 
     override fun resume() {
@@ -38,8 +27,8 @@ class HomePresenter(private val interactor: HomeInteractor): BasePresenter<HomeV
         //TODO Call dispose here
     }
 
-    fun loadMovies(page: Int) {
-        interactor.getUpcommingMovies()
+    fun loadMovies(page: Long = DEFAULT_PAGE, isFirst: Boolean = false) {
+        interactor.getUpcommingMovies(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
@@ -50,7 +39,11 @@ class HomePresenter(private val interactor: HomeInteractor): BasePresenter<HomeV
                     val movies: MutableList<Movie> = mutableListOf()
                     movies.addAll(moviesWithGenres)
 
-                    view?.showNextPage(movies)
+                    if (isFirst) {
+                        view?.showMovies(movies, it.totalPages)
+                    } else {
+                        view?.showNextPage(movies)
+                    }
                 }
     }
 }
