@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.data.model.Movie
 import com.arctouch.codechallenge.util.MovieImageUrlBuilder
+import com.arctouch.codechallenge.util.formatLocalDate
 import com.arctouch.codechallenge.util.onClick
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -39,11 +40,11 @@ class HomeAdapter(items: MutableList<Movie>, private val itemClickListener: (Vie
         fun bind(movie: Movie) {
             itemView.titleTextView.text = movie.title
             itemView.genresTextView.text = movie.genres?.joinToString(separator = GENRE_SEPARATOR) { it.name }
-            itemView.releaseDateTextView.text = movie.releaseDate
+            itemView.releaseDateTextView.text = movie.releaseDate?.formatLocalDate(itemView.context)
 
             Glide.with(itemView)
                 .load(movie.posterPath?.let { movieImageUrlBuilder.buildPosterUrl(it) })
-                .apply(RequestOptions().placeholder(R.drawable.ic_image_placeholder))
+                .apply(RequestOptions().placeholder(R.drawable.poster_placeholder))
                 .into(itemView.posterImageView)
         }
     }
@@ -72,8 +73,8 @@ class HomeAdapter(items: MutableList<Movie>, private val itemClickListener: (Vie
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-        when (holder?.itemViewType) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder.itemViewType) {
             LOADING -> (holder as? LoadingViewHolder)?.bind()
 
             MOVIE -> (holder as? MovieViewHolder)?.bind(movies[position])

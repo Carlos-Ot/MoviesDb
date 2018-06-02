@@ -3,9 +3,15 @@ package com.arctouch.codechallenge.features.details
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.base.BaseActivity
 import com.arctouch.codechallenge.data.model.Movie
+import com.arctouch.codechallenge.util.GlideApp
+import com.arctouch.codechallenge.util.MovieImageUrlBuilder
+import com.arctouch.codechallenge.util.formatLocalLongDate
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_movie_details.*
 import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
+
+private const val GENRES_SEPARATOR = ", "
 
 class MovieDetailsActivity : BaseActivity<MovieDetailsView>(), MovieDetailsView {
     override val kodein by closestKodein()
@@ -46,6 +52,22 @@ class MovieDetailsActivity : BaseActivity<MovieDetailsView>(), MovieDetailsView 
     }
 
     override fun showMovieDetail(movie: Movie) {
-        movieId.setText("Movie ID: ${movie.id} \n Title: ${movie.title}")
+        val movieImageUrlBuilder = MovieImageUrlBuilder()
+
+        GlideApp.with(this)
+                .load(movie.backdropPath?.let { movieImageUrlBuilder.buildBackdropUrl(it) })
+                .into(backdropImage)
+
+        movieTitle.text = movie.title
+
+        Glide.with(this)
+                .load(movie.posterPath?.let { movieImageUrlBuilder.buildPosterUrl(it) })
+                .into(posterImage)
+
+        detailsOverview.text = movie.overview
+
+        genresList.text = movie.genres?.joinToString(GENRES_SEPARATOR) { it.name }
+
+        releaseDate.text = movie.releaseDate?.formatLocalLongDate(this)
     }
 }

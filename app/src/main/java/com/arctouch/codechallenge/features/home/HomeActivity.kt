@@ -53,7 +53,7 @@ class HomeActivity : BaseActivity<HomeView>(), HomeView {
         }
 
     }
-    private val itemClickListener: (View, Int, Int) -> Unit = {view, position, type ->
+    private val itemClickListener: (View, Int, Int) -> Unit = {_, position, _ ->
         presenter.handleItemCLicked(homeAdapter.movies[position].id)
     }
 
