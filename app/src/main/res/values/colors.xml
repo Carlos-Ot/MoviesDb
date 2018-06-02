@@ -15,4 +15,5 @@
     <color name="gradientEndColor">#59252525</color>
     <color name="detailsGenre">#BDBDBD</color>
     <color name="detailsReleaseDate">#F6F6F6</color>
+    <color name="errorTextView">#FFFFFF</color>
 </resources>

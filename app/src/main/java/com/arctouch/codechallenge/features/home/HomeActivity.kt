@@ -1,6 +1,8 @@
 package com.arctouch.codechallenge.features.home
 
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.arctouch.codechallenge.R
@@ -32,6 +34,8 @@ class HomeActivity : BaseActivity<HomeView>(), HomeView {
     private var currentPage: Long = FIRST_PAGE
 
     private var totalPages: Int = DEFAULT_INT
+
+    private var isContentLoaded = false
 
     private val paginationListener: PaginationListener = object : PaginationListener(linearLayoutManager) {
         override fun loadPage() {
@@ -77,10 +81,20 @@ class HomeActivity : BaseActivity<HomeView>(), HomeView {
 
     }
 
+    override fun onConnectionChanged(isConnected: Boolean) {
+        if (!isContentLoaded) {
+            progressBar.visibility = View.VISIBLE
+            errorTextView.visibility = View.GONE
+            presenter.loadMovies(isFirst = true)
+        }
+    }
+
     override fun showMovies(movies: MutableList<Movie>, pages: Int) {
         totalPages = pages
         homeAdapter.movies = movies
+        isContentLoaded = true
         progressBar.visibility = View.GONE
+        errorTextView.visibility = View.GONE
 
         if(currentPage < totalPages) {
             homeAdapter.addProgressItem()
@@ -92,6 +106,7 @@ class HomeActivity : BaseActivity<HomeView>(), HomeView {
     override fun showNextPage(movies: MutableList<Movie>) {
         homeAdapter.removeProgressItem()
         isLoading = false
+        isContentLoaded = true
 
         homeAdapter.movies = movies
 
@@ -107,9 +122,15 @@ class HomeActivity : BaseActivity<HomeView>(), HomeView {
     }
 
     override fun showError(messageId: Int) {
+        isContentLoaded = false
+        errorTextView.setText(messageId)
+        progressBar.visibility = View.GONE
     }
 
     override fun showError(messsage: String) {
+        isContentLoaded = false
+        errorTextView.text = messsage
+        progressBar.visibility = View.GONE
     }
 
 }

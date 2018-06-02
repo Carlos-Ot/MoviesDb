@@ -1,11 +1,13 @@
 package com.arctouch.codechallenge.base
 
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import io.reactivex.disposables.CompositeDisposable
+import com.arctouch.codechallenge.util.framework.ConnectionBroadcastReceiver
 import org.kodein.di.KodeinAware
 
-abstract class BaseActivity<V: BaseView> : AppCompatActivity(), KodeinAware, BaseView {
+abstract class BaseActivity<V: BaseView> : AppCompatActivity(), KodeinAware, BaseView, ConnectionBroadcastReceiver.ConnectionListener {
 
     protected abstract val layout: Int
     protected abstract val presenter: BasePresenter<V>
@@ -13,6 +15,8 @@ abstract class BaseActivity<V: BaseView> : AppCompatActivity(), KodeinAware, Bas
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layout)
+
+        registerReceiver(ConnectionBroadcastReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
         setPresenter()
         initView()
@@ -48,6 +52,8 @@ abstract class BaseActivity<V: BaseView> : AppCompatActivity(), KodeinAware, Bas
     override fun onResume() {
         super.onResume()
         presenter.resume()
+
+        ConnectionBroadcastReceiver.connectionListener = this
     }
 
     override fun onDestroy() {

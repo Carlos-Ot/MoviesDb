@@ -1,5 +1,6 @@
 package com.arctouch.codechallenge.features.home
 
+import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.base.BasePresenter
 import com.arctouch.codechallenge.data.Cache
 import com.arctouch.codechallenge.data.model.Movie
@@ -32,14 +33,16 @@ class HomePresenter(private val interactor: HomeInteractor): BasePresenter<HomeV
         val disposable = interactor.getUpcommingMovies(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
+                .subscribe ({
 
                     if (isFirst) {
                         view?.showMovies(it.first, it.second)
                     } else {
                         view?.showNextPage(it.first)
                     }
-                }
+                },{
+                    view?.showError(R.string.movieDetailsLoadingError)
+                })
         compositeDisposable.add(disposable)
     }
 

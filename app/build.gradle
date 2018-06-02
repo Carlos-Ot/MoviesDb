@@ -41,13 +41,11 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     kapt 'com.github.bumptech.glide:compiler:4.4.0'
 
-    compile 'com.github.florent37:diagonallayout:1.0.7'
+    implementation 'com.github.florent37:diagonallayout:1.0.7'
 
     //Dependency Injection
     implementation 'org.kodein.di:kodein-di-generic-jvm:5.0.0'
     implementation 'org.kodein.di:kodein-di-framework-android:5.0.0'
-
-    //Kotlin Extensions
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

@@ -2,112 +2,115 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".features.details.MovieDetailsActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:isScrollContainer="true">
+    android:isScrollContainer="true"
+    tools:context=".features.details.MovieDetailsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
-        >
+        android:background="@color/colorPrimaryDark">
 
         <com.github.florent37.diagonallayout.DiagonalLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/detailsDiagonalHeight"
+            android:background="@color/colorPrimaryDark"
             app:diagonal_angle="@integer/detailsDiagonalAngle"
             app:diagonal_direction="left"
-            app:diagonal_position="bottom"
-            android:background="@color/colorPrimaryDark"
-            >
+            app:diagonal_position="bottom">
 
             <ImageView
                 android:id="@+id/backdropImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/backdrop_placeholder"
                 android:foreground="@drawable/backdrop_gradient"
-                />
+                android:scaleType="centerCrop"
+                android:src="@drawable/backdrop_placeholder" />
 
         </com.github.florent37.diagonallayout.DiagonalLayout>
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingStart="@dimen/detailsHorizontalPadding"
-            android:paddingEnd="@dimen/detailsHorizontalPadding"
             android:paddingBottom="@dimen/detailsBottomPadding"
-            >
+            android:paddingEnd="@dimen/detailsHorizontalPadding"
+            android:paddingStart="@dimen/detailsHorizontalPadding">
 
             <TextView
                 android:id="@+id/movieTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                android:layout_marginTop="@dimen/detailsTitleTop"
                 android:textColor="@color/detailsTitle"
                 android:textSize="@dimen/detailsTitle"
-                app:layout_constraintTop_toTopOf="parent"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="@dimen/detailsTitleTop"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
                 android:id="@+id/posterImage"
                 android:layout_width="@dimen/detailsPosterWidth"
                 android:layout_height="wrap_content"
-                android:src="@drawable/poster_placeholder"
                 android:layout_marginTop="@dimen/detailsPosterTop"
-                app:layout_constraintTop_toBottomOf="@+id/movieTitle"
+                android:src="@drawable/poster_placeholder"
                 app:layout_constraintStart_toStartOf="parent"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/movieTitle" />
 
             <TextView
                 android:id="@+id/detailsOverview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/detailsOverviewMargin"
                 android:layout_marginBottom="@dimen/detailsOverviewMargin"
-                android:textStyle="italic"
-                android:textSize="@dimen/detailsOverviewText"
-                android:textColor="@color/detailsOverview"
+                android:layout_marginTop="@dimen/detailsOverviewMargin"
                 android:textAlignment="center"
-                app:layout_constraintTop_toBottomOf="@+id/posterImage"
+                android:textColor="@color/detailsOverview"
+                android:textSize="@dimen/detailsOverviewText"
+                android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/posterImage" />
 
             <TextView
                 android:id="@+id/genresList"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/detailsGenreMargin"
                 android:layout_marginEnd="@dimen/detailsGenreMargin"
-                android:textSize="@dimen/detailsGenre"
-                android:textColor="@color/detailsGenre"
+                android:layout_marginStart="@dimen/detailsGenreMargin"
                 android:maxLines="@integer/detailsGenresMaxLines"
-                app:layout_constraintStart_toEndOf="@+id/posterImage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/posterImage"
+                android:textColor="@color/detailsGenre"
+                android:textSize="@dimen/detailsGenre"
                 app:layout_constraintBottom_toBottomOf="@+id/posterImage"
-                app:layout_constraintVertical_bias="1.0"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/posterImage"
+                app:layout_constraintTop_toTopOf="@+id/posterImage"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/releaseDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/detailsReleaseDate"
-                android:textColor="@color/detailsReleaseDate"
                 android:textAlignment="textEnd"
-                app:layout_constraintStart_toEndOf="@+id/posterImage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/posterImage"
+                android:textColor="@color/detailsReleaseDate"
+                android:textSize="@dimen/detailsReleaseDate"
                 app:layout_constraintBottom_toBottomOf="@+id/posterImage"
-                app:layout_constraintVertical_bias="0.5"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/posterImage"
+                app:layout_constraintTop_toTopOf="@+id/posterImage"
+                app:layout_constraintVertical_bias="0.5" />
 
-
+            <TextView
+                android:id="@+id/errorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/errorTextView"
+                android:textSize="@dimen/errorTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 
