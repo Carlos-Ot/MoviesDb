@@ -12,7 +12,6 @@ private const val DEFAULT_PAGE = 1L
 class HomePresenter(private val interactor: HomeInteractor): BasePresenter<HomeView>() {
 
     override fun init() {
-        loadMovies(isFirst = true)
     }
 
     override fun resume() {

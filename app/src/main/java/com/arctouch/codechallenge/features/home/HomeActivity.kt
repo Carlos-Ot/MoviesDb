@@ -78,7 +78,7 @@ class HomeActivity : BaseActivity<HomeView>(), HomeView {
     }
 
     override fun onCreate() {
-
+        presenter.loadMovies(isFirst = true)
     }
 
     override fun onConnectionChanged(isConnected: Boolean) {
