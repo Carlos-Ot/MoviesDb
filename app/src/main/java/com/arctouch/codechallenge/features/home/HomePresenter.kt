@@ -2,8 +2,6 @@ package com.arctouch.codechallenge.features.home
 
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.base.BasePresenter
-import com.arctouch.codechallenge.data.Cache
-import com.arctouch.codechallenge.data.model.Movie
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -40,7 +38,7 @@ class HomePresenter(private val interactor: HomeInteractor): BasePresenter<HomeV
                         view?.showNextPage(it.first)
                     }
                 },{
-                    view?.showError(R.string.movieDetailsLoadingError)
+                    view?.showError(R.string.loading_error)
                 })
         compositeDisposable.add(disposable)
     }

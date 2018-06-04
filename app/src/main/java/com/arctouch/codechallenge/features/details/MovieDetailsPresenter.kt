@@ -1,6 +1,5 @@
 package com.arctouch.codechallenge.features.details
 
-import android.util.Log
 import com.arctouch.codechallenge.R
 import com.arctouch.codechallenge.base.BasePresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -32,7 +31,7 @@ class MovieDetailsPresenter(private val interactor: MovieDetailsInteractor): Bas
                 .subscribe({
                     view?.showMovieDetail(it)
                 },{
-                    view?.showError(R.string.movieDetailsLoadingError)
+                    view?.showError(R.string.loading_error)
                 })
         compositeDisposable.add(disposable)
     }

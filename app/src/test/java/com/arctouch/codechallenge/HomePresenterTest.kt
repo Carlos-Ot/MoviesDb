@@ -16,7 +16,6 @@ import io.reactivex.plugins.RxJavaPlugins
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
@@ -102,7 +101,7 @@ class HomePresenterTest {
 
         presenter.loadMovies(isFirst = true)
 
-        verify(view).showError(R.string.movieDetailsLoadingError)
+        verify(view).showError(R.string.loading_error)
     }
 
     @Test
@@ -112,6 +111,6 @@ class HomePresenterTest {
 
         presenter.loadMovies(2)
 
-        verify(view).showError(R.string.movieDetailsLoadingError)
+        verify(view).showError(R.string.loading_error)
     }
 }
