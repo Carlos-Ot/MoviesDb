@@ -1,5 +1,6 @@
 package com.arctouch.codechallenge.base
 
+import android.content.BroadcastReceiver
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
@@ -12,11 +13,13 @@ abstract class BaseActivity<V: BaseView> : AppCompatActivity(), KodeinAware, Bas
     protected abstract val layout: Int
     protected abstract val presenter: BasePresenter<V>
 
+    protected val broadcastReceiver = ConnectionBroadcastReceiver()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layout)
 
-        registerReceiver(ConnectionBroadcastReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+        registerReceiver(broadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
         setPresenter()
         initView()
@@ -59,6 +62,7 @@ abstract class BaseActivity<V: BaseView> : AppCompatActivity(), KodeinAware, Bas
     override fun onDestroy() {
         super.onDestroy()
         presenter.destroy()
+        unregisterReceiver(broadcastReceiver)
     }
 
 }

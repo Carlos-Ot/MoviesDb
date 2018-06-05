@@ -11,7 +11,7 @@ import org.kodein.di.generic.instance
 /**
  * Created by caoj on 02/06/18.
  */
-class ConnectionBroadcastReceiver(): BroadcastReceiver() {
+class ConnectionBroadcastReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
 
