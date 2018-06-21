@@ -5,7 +5,7 @@ import com.arctouch.codechallenge.data.model.GenreResponse
 import com.arctouch.codechallenge.data.model.Movie
 import com.arctouch.codechallenge.data.model.UpcomingMoviesResponse
 import com.arctouch.codechallenge.data.source.dataSource.MovieDataSource
-import com.arctouch.codechallenge.data.source.remote.common.TmdbApi
+import com.arctouch.codechallenge.data.source.remote.network.TmdbApi
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 
@@ -14,12 +14,12 @@ class MovieRemoteDataSource(private val apiClient: TmdbApi): MovieDataSource {
 
     override fun getUpcommingMovies(page: Long): Observable<UpcomingMoviesResponse> {
        return Observable.zip(
-               apiClient.genres(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE)
+               apiClient.genres()
                        .flatMap {
                            Cache.cacheGenres(it.genres)
                            Observable.just(it)
                        },
-               apiClient.upcomingMovies(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, page, TmdbApi.DEFAULT_REGION),
+               apiClient.upcomingMovies(page, TmdbApi.DEFAULT_REGION),
                   BiFunction<GenreResponse, UpcomingMoviesResponse, UpcomingMoviesResponse> {
                       _: GenreResponse, movies: UpcomingMoviesResponse ->
                       movies
@@ -27,6 +27,6 @@ class MovieRemoteDataSource(private val apiClient: TmdbApi): MovieDataSource {
     }
 
     override fun getAndSaveMovie(movieId: Long): Observable<Movie> {
-        return apiClient.movie(movieId, TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE)
+        return apiClient.movie(movieId)
     }
 }

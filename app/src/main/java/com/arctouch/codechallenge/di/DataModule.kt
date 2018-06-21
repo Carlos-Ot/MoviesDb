@@ -4,8 +4,8 @@ import com.arctouch.codechallenge.data.repositories.MovieRepository
 import com.arctouch.codechallenge.data.source.dataSource.MovieDataSource
 import com.arctouch.codechallenge.data.source.local.MovieLocalDataSource
 import com.arctouch.codechallenge.data.source.remote.MovieRemoteDataSource
-import com.arctouch.codechallenge.data.source.remote.common.ServiceClient
-import com.arctouch.codechallenge.data.source.remote.common.TmdbApi
+import com.arctouch.codechallenge.data.source.remote.network.ServiceClient
+import com.arctouch.codechallenge.data.source.remote.network.TmdbApi
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
