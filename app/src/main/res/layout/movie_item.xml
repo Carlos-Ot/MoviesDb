@@ -3,66 +3,90 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
-    android:layout_marginBottom="4dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="4dp"
+    android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
+    app:cardBackgroundColor="@color/colorPrimary"
     android:foreground="?attr/selectableItemBackground"
-    app:cardCornerRadius="0dp">
+    android:layout_marginBottom="@dimen/movieCardBottom"
+    app:cardElevation="@dimen/movieCardElevation"
+    app:cardCornerRadius="@dimen/movieCardRadius">
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/posterImageView"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/moviePosterWidth"
+            android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:importantForAccessibility="no"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_image_placeholder" />
+            android:src="@drawable/poster_placeholder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/titleTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/movieCardHorizontalMargin"
+            android:layout_marginStart="@dimen/movieCardHorizontalMargin"
             android:layout_toEndOf="@id/posterImageView"
             android:ellipsize="end"
-            android:maxLines="2"
-            android:textSize="16sp"
+            android:maxLines="@integer/cardMovieTitleLines"
+            android:textSize="@dimen/cardMovieTitleText"
             android:textStyle="bold"
-            tools:text="Titanic" />
+            android:textColor="@color/cardTextPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/posterImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.20"
+            tools:text="Thor Ragnarok"/>
 
         <TextView
             android:id="@+id/genresTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/titleTextView"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="@dimen/cardMovieHorizontalMargin"
+            android:layout_marginStart="@dimen/cardMovieHorizontalMargin"
+            android:layout_marginTop="@dimen/cardMovieGenresTop"
             android:layout_toEndOf="@id/posterImageView"
             android:ellipsize="end"
-            android:maxLines="2"
-            android:textSize="14sp"
-            tools:text="Drama, Romance, Thriller" />
+            android:maxLines="@integer/detailsGenresMaxLines"
+            android:textColor="@color/cardTextPrimary"
+            android:textSize="@dimen/cardMovieGenresText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/posterImageView"
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+            tools:text="Comédia, Ação, Ficção"/>
 
         <TextView
             android:id="@+id/releaseDateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="@dimen/cardMovieHorizontalMargin"
+            android:layout_marginStart="@dimen/cardMovieHorizontalMargin"
             android:layout_toEndOf="@id/posterImageView"
-            android:textSize="12sp"
+            android:textColor="@color/cardTextDark"
+            android:textSize="@dimen/cardMovieReleaseText"
             android:textStyle="italic"
-            tools:text="19/12/1997" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/genresTextView"
+            app:layout_constraintVertical_bias="0.95"
+            tools:text="19/12/2017"/>
 
-    </RelativeLayout>
-
+    </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

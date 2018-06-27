@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="detailsDiagonalAngle">20</integer>
+    <integer name="detailsGenresMaxLines">2</integer>
+    <integer name="gradientAngle">270</integer>
+    <integer name="cardMovieTitleLines">1</integer>
+</resources>

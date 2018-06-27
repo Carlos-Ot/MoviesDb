@@ -2,5 +2,18 @@
 <resources>
     <color name="colorPrimary">#424242</color>
     <color name="colorPrimaryDark">#1B1B1B</color>
-    <color name="colorAccent">@color/colorPrimary</color>
+    <color name="colorAccent">#FFFFFF</color>
+
+    <color name="cardTextPrimary">#FFFFFF</color>
+    <color name="cardTextDark">#BDBDBD</color>
+
+    <color name="detailsTitle">#252525</color>
+    <color name="detailsOverview">#FFFFFF</color>
+
+    <color name="gradientStartColor">#99FFFFFF</color>
+    <color name="gradientCenterColor">#66BDBDBD</color>
+    <color name="gradientEndColor">#59252525</color>
+    <color name="detailsGenre">#BDBDBD</color>
+    <color name="detailsReleaseDate">#F6F6F6</color>
+    <color name="errorTextView">#FFFFFF</color>
 </resources>
